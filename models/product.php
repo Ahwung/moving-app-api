@@ -46,6 +46,30 @@ Class Products {
         }
         return $products;
     }
+
+    static function create($product) {
+        $query = "INSERT INTO products (name, price, url, store, room, category) VALUES ($1, $2, $3, $4, $5, $6)";
+        $query_params = array($product->name, $product->price, $product->url, $product->room, $product->category);
+        $result = pg_query_params($query, $query_params);
+
+        return self::all();
+    }
+
+    static function update($updated_product) {
+        $query = "UPDATE products SET name = $1, price = $2, url = $3, store = $4, room = $5, category = $6 WHERE id = $7";
+        $query_params = array($updated_product->name, $updated_product->price, $updated_product->url, $updated_product->store, $updated_product->room, $updated_product->category, $updated_product->id);
+        $result = pg_query_params($query, $query_params);
+        
+        return self::all();
+    }
+
+    static function delete() {
+        $query = "DELETE FROM products WHERE id=$1";
+        $query_params = array($id);
+        $result = pg_query_params($query, $query_params);
+
+        return self::all();
+    }
 }
 
 ?>
