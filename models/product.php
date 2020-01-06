@@ -16,7 +16,7 @@ if(getenv('DATABASE_URL')){
         "dbname=".$dbname
     );
 } else {
-    $dbconn = pg_connect("host=localhost dbname=phpapi");
+    $dbconn = pg_connect("host=localhost dbname=moving");
 }
 
 Class Product {
@@ -68,9 +68,9 @@ Class Products {
 
     static function create($product) {
         $query = "INSERT INTO products (name, price, url, store, room, category, bought) VALUES ($1, $2, $3, $4, $5, $6, $7)";
-        $query_params = array($product->name, $product->price, $product->url, $product->room, $product->category, $product->bought);
+        $query_params = array($product->name, $product->price, $product->url, $product->store, $product->room, $product->category, $product->bought);
         $result = pg_query_params($query, $query_params);
-
+        echo $result;
         return self::all();
     }
 
@@ -82,7 +82,7 @@ Class Products {
         return self::all();
     }
 
-    static function delete() {
+    static function delete($id) {
         $query = "DELETE FROM products WHERE id=$1";
         $query_params = array($id);
         $result = pg_query_params($query, $query_params);
