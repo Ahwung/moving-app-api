@@ -70,7 +70,7 @@ Class Products {
         $query = "INSERT INTO products (name, price, url, store, room, category, bought) VALUES ($1, $2, $3, $4, $5, $6, $7)";
         $query_params = array($product->name, $product->price, $product->url, $product->store, $product->room, $product->category, $product->bought);
         $result = pg_query_params($query, $query_params);
-        echo $result;
+        
         return self::all();
     }
 
